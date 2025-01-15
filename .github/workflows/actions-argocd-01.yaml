@@ -65,7 +65,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: HIRedrain/lion-app-with-argocd-basic
+          repository: HIRedrain/lion-app-with-argocd
           ref: main
           token: ${{ secrets.TOKEN }}
 
