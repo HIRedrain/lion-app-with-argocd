@@ -80,7 +80,7 @@ jobs:
 
       - name: Set up Image
         run: |
-          sed -i 's|image: .*$|image: '"${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}"'|g' ./manifest/argocd-deployment.yaml
+          sed -i 's|image: .*$|image: '"${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}"'|g' ./argocd-deployment.yaml
 
       - name: Commit and push changes
         run: |
