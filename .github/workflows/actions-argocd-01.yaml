@@ -74,6 +74,12 @@
           id: timestamp
           run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
+        - name: Check deployment file
+          run: ls -al manifest/
+
+        - name: Check deployment file
+          run: ls -al $(pwd)/manifest/
+
         - name: Set up Image
           run: |
             sed -i 's|image: .*$|image: '"${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}"'|g' ./manifest/argocd-deployment.yaml
