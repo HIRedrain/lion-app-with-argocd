@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: dogeun/lion-app-with-actions:8531ec839284480c9dc8077158293299c5b72e5a
+          image: dogeun/lion-app-with-actions:633b80ac3258884fed1fea324cfba1ca4722ae2f
