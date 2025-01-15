@@ -73,6 +73,11 @@ jobs:
         id: timestamp
         run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
+      - name: Check ls
+        run: |
+          pwd
+          ls -al          
+
       - name: Set up Image
         run: |
           sed -i 's|image: .*$|image: '"${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}"'|g' ./manifest/argocd-deployment.yaml
