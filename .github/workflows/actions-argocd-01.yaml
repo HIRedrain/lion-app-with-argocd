@@ -75,9 +75,6 @@
           run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
         - name: Check deployment file
-          run: ls -al manifest/
-
-        - name: Check deployment file
           run: ls -al $(pwd)/manifest/
 
         - name: Set up Image
