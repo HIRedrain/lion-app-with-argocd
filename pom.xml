@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>app</groupId>
-    <artifactId>lion-app-k8s-basic</artifactId>
+    <artifactId>lion-app-with-argocd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>lion-app-k8s-basic</name>
-    <description>lion-app-k8s-basic</description>
+    <name>lion-app-with-argocd</name>
+    <description>lion-app-with-argocd</description>
     <url/>
     <licenses>
         <license/>
