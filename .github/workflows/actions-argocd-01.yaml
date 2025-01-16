@@ -1,7 +1,8 @@
 name: App With Github Actions with ArgoCD
 
 on:
-  push
+  workflow_dispatch
+  #push
 
 jobs:
   ci:
