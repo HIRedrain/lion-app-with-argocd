@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: lion-app-with-argocd-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: lion-app-with-argocd-web
