@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: dogeun/lion-app-with-actions:e760869bcfb3494cb949744313dbbbc27a5a829a
+          image: 913524935501.dkr.ecr.ap-northeast-2.amazonaws.com/eks-second:f473c0f6e302e22963d3ab9466518bda67c4003b
