@@ -1,8 +1,8 @@
 name: App with GitHub Actions and ArgoCD for Separate Manifests
 
 on:
-  # workflow_dispatch
-  push
+  workflow_dispatch
+  #push
 
 jobs:
   ci:
