@@ -82,7 +82,7 @@ jobs:
 
       - name: Set up Image
         run: |
-          sed -i 's|image: .*$|image: '"${{ secrets.ECRURL }}:${{ github.sha }}"'|g' ./manifestEKS/argocd-ecr-deployment.yaml
+          sed -i 's|image: .*$|image: '"${{ secrets.ECRURL }}:${{ github.sha }}"'|g' ./manifestEKS/eks-app.yaml
 
       - name: Commit and push changes
         run: |
