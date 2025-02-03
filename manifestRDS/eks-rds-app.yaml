@@ -1,0 +1,34 @@
+# eks-app.yaml
+apiVersion: v1
+kind: Service   
+metadata:
+  name: eks-app-service
+spec:
+  selector:
+    app.kubernetes.io/name: eks-app
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eks-app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: eks-app
+    spec:
+      containers:
+      - name: eks-app-container
+        image: 913524935501.dkr.ecr.ap-northeast-2.amazonaws.com/eks-app:9198f19de4e3d618a35f73935850c0d8acea7296
+        ports:
+          - protocol: TCP
+            containerPort: 8080
