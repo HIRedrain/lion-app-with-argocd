@@ -17,7 +17,7 @@ kind: Deployment
 metadata:
   name: eks-app-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: eks-app
