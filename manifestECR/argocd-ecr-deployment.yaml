@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: 913524935501.dkr.ecr.ap-northeast-2.amazonaws.com/eks-app:48b82bcdf16f8df043d11f244ad5b98cb99b25c6
+          image: 913524935501.dkr.ecr.ap-northeast-2.amazonaws.com/eks-app:cfdd314b5800f85540ec51cab6b3c75456e3bd28
