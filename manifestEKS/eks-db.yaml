@@ -10,7 +10,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: gp3
+  storageClassName: gp3 # 아까 위에 스토리지 생성할 때 썼던 이름 작성해야 mapping 됨
 ---
 apiVersion: v1
 kind: Service
@@ -49,13 +49,13 @@ spec:
             - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: k8s12345
+              value: root
             - name: MYSQL_DATABASE
-              value: app
+              value: argo
             - name: MYSQL_USER
-              value: app
+              value: argo
             - name: MYSQL_PASSWORD
-              value: app12345
+              value: argo
           volumeMounts:
             - name: db-storage
               mountPath: /data
