@@ -1,0 +1,9 @@
+# eks-db.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  type: ExternalName # Loadbalancer x : 특정 파드에서 외부로 나가는 서비스가 필요하다
+  externalName: ${{ secrets.RDSENDPOINT }}
+  
