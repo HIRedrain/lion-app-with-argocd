@@ -34,7 +34,7 @@ public class S3Service {
     private final String DIR_NAME = "s3_data";
 
     // 파일 업로드
-    public void uploadS3File(MultipartFile file) throws Exception {
+    public void uploadS3FileWindows(MultipartFile file) throws Exception {
 
         // C:/CE/97.data/s3_data에 파일 저장 -> S3 전송 및 저장 (putObject)
         // D://CE//97.data//s3_data
@@ -43,6 +43,52 @@ public class S3Service {
         }
 
         String filePath = "D://CE//97.data//" + DIR_NAME;
+        String fileName = file.getOriginalFilename(); // attachmentOriginalFileName
+        UUID uuid = UUID.randomUUID(); // uuid 난수 생성
+        String saveName = uuid.toString() + "_" + fileName; // attachmentFileName
+        Long fileSize = file.getSize(); // attachmentFileSize
+
+        // 새로운 entity 객체 생성
+        AttachmentFile attachmentFile = AttachmentFile.builder()
+                .filePath(filePath)
+                .attachmentOriginalFileName(fileName)
+                .attachmentFileName(saveName)
+                .attachmentFileSize(fileSize)
+                .build();
+
+        Long fileNo = fileRepository.save(attachmentFile).getAttachmentFileNo(); // DB 에 저장
+        if (fileNo != null) {
+            // DB 에 제대로 저장된 것 => application 통해서 s3 에 해당 파일 업로드 ; 로컬에 먼저 저장해서 s3 로 업로드
+            System.out.println("S3Service - uploadS3File - file Number = " + fileNo);
+
+            File uploadFile = new File(attachmentFile.getFilePath() + "//" + saveName);
+            file.transferTo(uploadFile); // 물리적으로 로컬에 저장 - 이거 주석 처리 하면? => error 발생 (s3 에 업로드 불가)
+
+            // S3 전송 => 저장 ; amazonS3.putObject(bucket, key, file)
+            // bucket ; bucket 이름
+            // key ; bucket 내부에 객체가 저장되는 경로 + 파일명
+            // file ; 올릴 파일
+            String s3Key = DIR_NAME + "/" + uploadFile.getName();
+            amazonS3.putObject(bucketName, s3Key, uploadFile);
+
+            if (uploadFile.exists()) { // 올린 파일 로컬에 여전히 존재 => 삭제
+                uploadFile.delete();
+
+                //amazonS3.deleteObject(bucketName, s3Key); // bucket 에 올린 것 삭제
+            }
+        }
+
+    }
+
+    public void uploadS3FileLinux(MultipartFile file) throws Exception {
+
+        // C:/CE/97.data/s3_data에 파일 저장 -> S3 전송 및 저장 (putObject)
+        // D://CE//97.data//s3_data
+        if (file == null) {
+            throw new Exception("파일 전달 오류 발생");
+        }
+
+        String filePath = "/user/local/s3_data/" + DIR_NAME;
         String fileName = file.getOriginalFilename(); // attachmentOriginalFileName
         UUID uuid = UUID.randomUUID(); // uuid 난수 생성
         String saveName = uuid.toString() + "_" + fileName; // attachmentFileName

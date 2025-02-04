@@ -22,14 +22,28 @@ public class S3FileController {
 
     private final S3Service s3Service;
 
-    @PostMapping(value = "/api/s3/files")
-    public void uploadS3File(@RequestPart(value = "file", required = false) MultipartFile file) { // @RequestPart(value="file", required=false) ; 파일 없어도 문제 x
-        System.out.println("S3FileController - /api/s3/files - uploadS3File()");
+    @PostMapping(value = "/api/s3/files/win")
+    public void uploadS3FileWindows(@RequestPart(value = "file", required = false) MultipartFile file) { // @RequestPart(value="file", required=false) ; 파일 없어도 문제 x
+        System.out.println("S3FileController - /api/s3/files - uploadS3FileWindows()");
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getSize());
 
         try {
-            s3Service.uploadS3File(file);
+            s3Service.uploadS3FileWindows(file);
+        } catch (Exception e) {
+            // "file" 이 없으면 예외 발생 => 처리
+            e.printStackTrace();
+        }
+    }
+
+    @PostMapping(value = "/api/s3/files/li")
+    public void uploadS3FileLinux(@RequestPart(value = "file", required = false) MultipartFile file) { // @RequestPart(value="file", required=false) ; 파일 없어도 문제 x
+        System.out.println("S3FileController - /api/s3/files - uploadS3FileLinux()");
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getSize());
+
+        try {
+            s3Service.uploadS3FileLinux(file);
         } catch (Exception e) {
             // "file" 이 없으면 예외 발생 => 처리
             e.printStackTrace();
