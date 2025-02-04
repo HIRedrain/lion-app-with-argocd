@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: 913524935501.dkr.ecr.ap-northeast-2.amazonaws.com/eks-app:cfdd314b5800f85540ec51cab6b3c75456e3bd28
+          image: lion-app-with-argocd
