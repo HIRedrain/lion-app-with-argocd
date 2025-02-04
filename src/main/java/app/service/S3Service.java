@@ -96,6 +96,13 @@ public class S3Service {
 
         log.info("service - uploadS3FileLinux() - filePath : " + filePath + ", fileName : " + fileName + ", fileSize : " + fileSize + ", saveName : " + saveName);
 
+        // 디렉토리가 존재하는지 확인하고, 없으면 생성
+        File dir = new File(filePath);
+        if (!dir.exists()) {
+            dir.mkdirs(); // 디렉토리 생성
+        }
+
+
         // 새로운 entity 객체 생성
         AttachmentFile attachmentFile = AttachmentFile.builder()
                 .filePath(filePath)
