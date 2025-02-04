@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
 import org.springframework.core.io.InputStreamResource;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 @Transactional
+@Slf4j
 public class S3Service {
 
     private final AmazonS3 amazonS3;
@@ -82,8 +84,6 @@ public class S3Service {
 
     public void uploadS3FileLinux(MultipartFile file) throws Exception {
 
-        // C:/CE/97.data/s3_data에 파일 저장 -> S3 전송 및 저장 (putObject)
-        // D://CE//97.data//s3_data
         if (file == null) {
             throw new Exception("파일 전달 오류 발생");
         }
@@ -93,6 +93,8 @@ public class S3Service {
         UUID uuid = UUID.randomUUID(); // uuid 난수 생성
         String saveName = uuid.toString() + "_" + fileName; // attachmentFileName
         Long fileSize = file.getSize(); // attachmentFileSize
+
+        log.info("service - uploadS3FileLinux() - filePath : " + filePath + ", fileName : " + fileName + ", fileSize : " + fileSize + ", saveName : " + saveName);
 
         // 새로운 entity 객체 생성
         AttachmentFile attachmentFile = AttachmentFile.builder()
@@ -105,9 +107,9 @@ public class S3Service {
         Long fileNo = fileRepository.save(attachmentFile).getAttachmentFileNo(); // DB 에 저장
         if (fileNo != null) {
             // DB 에 제대로 저장된 것 => application 통해서 s3 에 해당 파일 업로드 ; 로컬에 먼저 저장해서 s3 로 업로드
-            System.out.println("S3Service - uploadS3File - file Number = " + fileNo);
+            log.info("S3Service - uploadS3FileLinux() - file Number = " + fileNo);
 
-            File uploadFile = new File(attachmentFile.getFilePath() + "//" + saveName);
+            File uploadFile = new File(attachmentFile.getFilePath() + "/" + saveName);
             file.transferTo(uploadFile); // 물리적으로 로컬에 저장 - 이거 주석 처리 하면? => error 발생 (s3 에 업로드 불가)
 
             // S3 전송 => 저장 ; amazonS3.putObject(bucket, key, file)
@@ -119,6 +121,7 @@ public class S3Service {
 
             if (uploadFile.exists()) { // 올린 파일 로컬에 여전히 존재 => 삭제
                 uploadFile.delete();
+                log.info("S3Service - uploadS3FileLinux - delete");
 
                 //amazonS3.deleteObject(bucketName, s3Key); // bucket 에 올린 것 삭제
             }
