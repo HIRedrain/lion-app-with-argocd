@@ -82,7 +82,7 @@ jobs:
 
       - name: Set up Image
         run: |
-          sed -i 's|image: .*$|image: '"${{ secrets.ECRURL }}:${{ github.sha }}"'|g' ./manifestRDS/eks-rds-app.yaml
+          sed -i 's|image: .*$|image: '"${{ secrets.ECRURL }}:${{ github.sha }}"'|g' ./manifestS3/eks-app.yaml
 
       - name: Commit and push changes
         run: |
