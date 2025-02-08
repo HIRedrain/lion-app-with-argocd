@@ -1,0 +1,2 @@
+// 로컬 경로
+D:\CE\99.practice\lion_argocd\lion-app-with-argocd
